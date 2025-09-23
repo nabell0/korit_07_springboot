@@ -42,7 +42,7 @@ public class CardatabaseApplication implements CommandLineRunner {
         ownerRepository.saveAll(Arrays.asList(owner1, owner2));
 
 
- 
+
         // 그리고 Car의 생성자에 field를 추가했기 때문에 오류 나는 것을 막기 위해 owner들을 추가해주겠습니다.
         repository.save(new Car("Kia", "Seltos", "Chacol", "370SU5690", 2020, 30000000, owner1));
         repository.save(new Car("Hyundai", "Sonata", "White", "123456", 2025, 25000000,owner2));
