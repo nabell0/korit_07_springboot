@@ -1,9 +1,6 @@
 package com.example.cardatabase;
 
-import com.example.cardatabase.domain.Car;
-import com.example.cardatabase.domain.CarRepository;
-import com.example.cardatabase.domain.Owner;
-import com.example.cardatabase.domain.OwnerRepository;
+import com.example.cardatabase.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -22,10 +19,12 @@ public class CardatabaseApplication implements CommandLineRunner {
     // 여기에 생성자 주입 부분 적겠습니다 (그리고.md파일로 옯기는 것도 함께 하겠습니다.)
     private final CarRepository repository;
     private final OwnerRepository ownerRepository;
+    private final AppUserRepository userRepository;
 
-    public CardatabaseApplication(CarRepository repository, OwnerRepository ownerRepository) {
+    public CardatabaseApplication(CarRepository repository, OwnerRepository ownerRepository, AppUserRepository userRepository) {
         this.repository = repository;
         this.ownerRepository = ownerRepository;
+        this.userRepository = userRepository;
     }
 
     public static void main(String[] args) {
@@ -51,6 +50,13 @@ public class CardatabaseApplication implements CommandLineRunner {
         for (Car car : repository.findAll()) {
            logger.info("brand : {}, model : {}", car.getBrand(), car.getModel());
         }
+
+        // AppUser 더미 데이터를 추가
+        // 저 위에 보면 Owner의 경우에는 owner1 / owner2 만들어가지고 ownerRepository에 저장.
+        userRepository.save(new AppUser("user","$2a$12$Wnt.7hMqej0CL./xgZmmRew7vbKChCDAqzoCA599pdErRsG5rjsia","USER"));
+        userRepository.save(new AppUser("admin","$2a$12$qoB6fCCcuX03vwz8KrxoH.Zn92wAaz1jf.9LZDb3UY22Ucw7Bh2CC","ADMIN"));
+
+
 //        System.out.println(repository.findByBrand("Kia"));
 //        System.out.println(repository.findByColor("White"));
 //        System.out.println(repository.findByModelYear(2024));
